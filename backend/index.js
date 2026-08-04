@@ -1,19 +1,34 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const path = require('path');
 const app = express();
 const port = process.env.PORT || 3000;
 
+const allowedOrigins = [
+  'https://yogyakarta-gn-vercel-8oif.vercel.app',
+  'https://yogyakarta-gn-vercel.vercel.app',
+  'http://localhost:5173',
+  'http://localhost:3000'
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Memperbolehkan request tanpa origin (seperti REST Client / Postman)
+    if (!origin || allowedOrigins.includes(origin) || /^https:\/\/.*\.vercel\.app$/.test(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+}));
+
+app.options('*', cors());
+
 app.use(express.json({ limit: '12mb' }));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use((req, res, next) => {
-  const allowedOrigin = process.env.FRONTEND_URL || '*';
-  res.header('Access-Control-Allow-Origin', allowedOrigin);
-  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  if (req.method === 'OPTIONS') return res.sendStatus(204);
-  next();
-});
 
 const sequelize = require('./config/db');
 require('./models');
