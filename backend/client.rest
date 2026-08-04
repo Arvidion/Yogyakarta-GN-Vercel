@@ -1,0 +1,181 @@
+@baseUrl = http://localhost:3000/api
+# Salin token dari respon login ke variabel authToken di bawah ini:
+@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJuYW1hIjoiYWRtaW4iLCJpYXQiOjE3ODU3OTE3NzUsImV4cCI6MTc4NjM5NjU3NX0.w_Xfy93NB5cUYxgvxQpLwDsgIbSlAz5edwOCMVdIg-w
+
+### -------------------------------------------------------------------
+### 1. AUTENTIKASI (LOGIN ADMIN)
+### -------------------------------------------------------------------
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "nama": "admin",
+  "password": "1234"
+}
+
+
+### -------------------------------------------------------------------
+### 2. ENDPOINT PUBLIK (GET - Tanpa Auth)
+### -------------------------------------------------------------------
+
+### Ambil Semua Program
+GET {{baseUrl}}/programs
+
+### Ambil Detail Program (ID 1)
+GET {{baseUrl}}/programs/1
+
+### Ambil Semua Partner
+GET {{baseUrl}}/partners
+
+### Ambil Detail Partner (ID 1)
+GET {{baseUrl}}/partners/1
+
+### Ambil Semua Bidang Kerja Sama
+GET {{baseUrl}}/bidangs
+
+### Ambil Semua Negara
+GET {{baseUrl}}/negara
+
+
+### -------------------------------------------------------------------
+### 3. ENDPOINT PROTEKSI ADMIN (POST, PUT, DELETE - Butuh Bearer Token)
+### -------------------------------------------------------------------
+
+### --- PROGRAM ---
+
+### Tambah Program Baru
+POST {{baseUrl}}/programs
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "nama": "Program Kemitraan Budaya Global",
+  "partner_id": 1,
+  "negara_id": 1,
+  "tanggal": "2026-08-15",
+  "lokasi": "Yogyakarta",
+  "status": "Aktif",
+  "deskripsi": "Program pertukaran budaya dan seni antar mitra internasional.",
+  "situs": "https://jogjaglobalnetwork.go.id",
+  "bidangIds": [1, 2]
+}
+
+### Edit Program (ID 1)
+PUT {{baseUrl}}/programs/1
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "nama": "Program Kemitraan Budaya Global (Diperbarui)",
+  "status": "Aktif",
+  "lokasi": "Kota Yogyakarta",
+  "situs": "https://jogjaglobalnetwork.go.id"
+}
+
+### Hapus Program (ID 1)
+DELETE {{baseUrl}}/programs/1
+Authorization: Bearer {{authToken}}
+
+
+### --- PARTNER ---
+
+### Tambah Partner Baru
+POST {{baseUrl}}/partners
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "nama": "Universitas Kolaborasi Global",
+  "tipe": "Pendidikan",
+  "negara_id": 1,
+  "kota": "Yogyakarta",
+  "status": "Aktif",
+  "deskripsi": "Mitra akademis dalam riset sosial dan teknologi.",
+  "situs1": "https://example-partner.org",
+  "bidangIds": [1]
+}
+
+### Edit Partner (ID 1)
+PUT {{baseUrl}}/partners/1
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "nama": "Universitas Kolaborasi Global (Updated)",
+  "kota": "Sleman",
+  "status": "Aktif"
+}
+
+### Hapus Partner (ID 1)
+DELETE {{baseUrl}}/partners/1
+Authorization: Bearer {{authToken}}
+
+
+### --- BIDANG KERJA SAMA ---
+
+### Tambah Bidang Baru
+POST {{baseUrl}}/bidangs
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "jenis": "Kewirausahaan Sosial"
+}
+
+### Edit Bidang (ID 1)
+PUT {{baseUrl}}/bidangs/1
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "jenis": "Lingkungan & Keberlanjutan"
+}
+
+### Hapus Bidang (ID 1)
+DELETE {{baseUrl}}/bidangs/1
+Authorization: Bearer {{authToken}}
+
+
+### --- NEGARA ---
+
+### Tambah Negara Baru
+POST {{baseUrl}}/negara
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "kode_iso": "IDN",
+  "nama": "Indonesia"
+}
+
+### Edit Negara (ID 1)
+PUT {{baseUrl}}/negara/1
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "kode_iso": "IDN",
+  "nama": "Republik Indonesia"
+}
+
+### Hapus Negara (ID 1)
+DELETE {{baseUrl}}/negara/1
+Authorization: Bearer {{authToken}}
+
+
+### --- USERS (ADMIN DATA) ---
+
+### Ambil Daftar User Admin
+GET {{baseUrl}}/users
+Authorization: Bearer {{authToken}}
+
+### Tambah Admin Baru
+POST {{baseUrl}}/users
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "nama": "admin2",
+  "password": "password123"
+}
