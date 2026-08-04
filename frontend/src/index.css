@@ -1,0 +1,46 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-poppins: 'Poppins', system-ui, -apple-system, sans-serif;
+  --font-jakarta: 'Plus Jakarta Sans', 'Poppins', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', 'Poppins', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Poppins', system-ui, -apple-system, sans-serif;
+}
+
+:root {
+  --font-heading: 'Poppins', system-ui, -apple-system, sans-serif;
+  --font-body: 'Plus Jakarta Sans', 'Poppins', system-ui, -apple-system, sans-serif;
+
+  font-family: var(--font-body);
+  line-height: 1.6;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6,
+.font-heading,
+.font-poppins {
+  font-family: var(--font-heading);
+  letter-spacing: -0.025em;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #f5f1e8;
+  font-family: var(--font-body);
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
