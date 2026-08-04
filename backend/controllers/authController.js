@@ -11,7 +11,7 @@ async function login(req, res) {
       return res.status(401).json({ error: 'Nama pengguna atau password salah' });
     }
 
-    const secret = process.env.JWT_SECRET || 'yogyakarta_global_network_jwt_secret_key_2026';
+    const secret = process.env.JWT_SECRET;
     const token = jwt.sign(
       { id: user.id, nama: user.nama },
       secret,
