@@ -7,7 +7,7 @@ const port = process.env.PORT || 3000;
 app.use(express.json({ limit: '12mb' }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use((req, res, next) => {
-  const allowedOrigin = process.env.FRONTEND_URL || '*';
+  const allowedOrigin = 'https://yogyakarta-gn-vercel-8oif.vercel.app' || 'yogyakarta-gn-vercel-8oif.vercel.app' || process.env.FRONTEND_URL || '*';
   res.header('Access-Control-Allow-Origin', allowedOrigin);
   res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
