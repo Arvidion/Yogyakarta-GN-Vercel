@@ -7,7 +7,8 @@ const port = process.env.PORT || 3000;
 app.use(express.json({ limit: '12mb' }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', process.env.FRONTEND_URL || 'http://localhost:5173' || '*');
+  const allowedOrigin = process.env.FRONTEND_URL || '*';
+  res.header('Access-Control-Allow-Origin', allowedOrigin);
   res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   if (req.method === 'OPTIONS') return res.sendStatus(204);
