@@ -26,7 +26,8 @@ app.use(cors({
   credentials: true
 }));
 
-app.use(express.json({ limit: '12mb' }));
+app.use(express.json({ limit: '20mb' }));
+app.use(express.urlencoded({ extended: true, limit: '20mb' }));
 
 const sequelize = require('./config/db');
 require('./models');
@@ -48,6 +49,13 @@ app.use('/api/auth', authRoutes);
 app.use('/api/upload', uploadRoutes);
 
 app.get('/', (req, res) => res.send('API is running'));
+
+// Global error handler to ensure CORS headers and JSON responses on all errors
+app.use((err, req, res, next) => {
+  console.error('Server error:', err);
+  const status = err.status || err.statusCode || 500;
+  res.status(status).json({ error: err.message || 'Terjadi kesalahan pada server' });
+});
 
 // Only start standalone HTTP server when executed directly (local dev)
 if (!process.env.VERCEL) {
